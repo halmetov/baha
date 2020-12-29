@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<!-- inner page banner -->
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">Список Услуг</h1>
+              <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li class="active">Список Услуг</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end inner page banner -->
+
+
+<!-- section SERVICES -->
+<div class="section padding_layout_1 service_list">
+  <div class="container">
+    <div class="row">
+      {% for service in services %}
+      <div class="col-md-4 service_blog margin_bottom_50">
+        <div class="full">
+          <div class="service_img"> <img class="img-responsive" src="/media/{{ service.logo }}" alt="#" /> </div>
+          <div class="service_cont">
+            <h3 class="service_head">{{ service.title }}</h3>
+            <p>{{ service.mini_description }}</p>
+            <div class="bt_cont"> <a class="btn sqaure_bt" href="/service-detail/{{ service.id }}/">Подробнее</a> </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+
+<!-- section STAFF -->
+<div class="section padding_layout_1 light_silver">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_left">
+            <h2>Опытные Специалисты</h2>
+            <p class="large">Наши специалисты неоднократно появлялись в прессе.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      {% for ex_staff in ex_staffs  %}
+      <div class="col-md-3 col-sm-6">
+        <div class="full team_blog_colum">
+          <div class="it_team_img"> <img class="img-responsive" src="/media/{{ ex_staff.logo }}" alt="#"> </div>
+          <div class="team_feature_head">
+            <h4>{{ ex_staff.first_name }} {{ ex_staff.last_name }}</h4>
+          </div>
+          <div class="team_feature_social">
+            <div class="social_icon">
+              <ul class="list-inline">
+                <li><a class="fa fa-facebook" href="{{ ex_staff.facebook }}" title="Facebook" target="_blank"></a></li>
+                <li><a class="fa fa-google-plus" href="{{ ex_staff.gmail }}" title="Google+" target="_blank"></a></li>
+                <li><a class="fa fa-twitter" href="{{ ex_staff.twitter }}" title="Twitter" target="_blank"></a></li>
+                <li><a class="fa fa-whatsapp" href="{{ ex_staff.whatsapp }}" title="WhatsApp" target="_blank"></a></li>
+                <li><a class="fa fa-instagram" href="{{ ex_staff.instagram }}" title="Instagram" target="_blank"></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+
+
+
+{% endblock %}

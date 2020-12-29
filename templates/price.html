@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- inner page banner -->
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">Ценообразование</h1>
+              <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li>Страницы</li>
+                <li class="active">Ценообразование</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end inner page banner -->
+
+<!-- section PRICE-->
+<div class="section padding_layout_1 service_list">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_center">
+            <h2>Наши Ценовые Планы</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- full price table -->
+        <div class="price_table row" style="margin-top: 0;">
+          {% for price in prices %}
+
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 {% if forloop.counter == 2 %}price_table_active {% endif %}" style="z-index:{% if forloop.counter == 2 %}1{% else  %} 0 {% endif %};">
+            <div class="row">
+              <div class="price_table_inner margin_bottom_30">
+                <div class="price_head text_align_center white_fonts">
+                  <h5>{{ price.title }}</h5>
+                  <p>{{ price.mini_title }}</p>
+                </div>
+                <div class="price_contant">
+                  <div class="center">
+                    <p class="price_amount">$ <span class="price_no">{{ price.price }}</span>/Per Month</p>
+                  </div>
+                  <div class="price_cont text_align_center">
+                    <p>{{ price.quality1 }}</p>
+                    <p>{{ price.quality2 }}</p>
+                    <p>{{ price.quality3 }}</p>
+                    <p>{{ price.quality4 }}</p>
+                  </div>
+                </div>
+                <div class="price_bottom">
+                  <div class="center"> <a href="#" class="btn main_bt">Начать</a> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- end full price table -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+{% endblock %}

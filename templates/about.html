@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+
+
+<!-- inner page banner BREADCRUMB -->
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">О Нас</h1>
+              <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li class="active">О Нас</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end inner page banner -->
+
+
+<!-- section RECOVERY  -->
+<div class="section padding_layout_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_center">
+            <h2>Мы являемся ведущей компанией</h2>
+            <p class="large">Самый быстрый ремонт по лучшей цене!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% for about in abouts %}
+    <div class="row about_blog" style="margin-bottom:40px;">
+      <div class="col-lg-6 col-md-6 col-sm-12 about_cont_blog">
+        <div class="full text_align_left">
+          <h3>{{ about.title }}</h3>
+          <p>{{ about.description }}</p>
+          <ul>
+            {% for about_action in about_actions %}
+            {% if about_action.action.id == about.id  %}
+            <li><i class="fa fa-check-circle"></i>{{ about_action.title }}</li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 about_feature_img padding_right_0">
+        <div class="full text_align_center"> <img class="img-responsive" src="/media/{{ about.logo }}" alt="#" /> </div>
+      </div>
+    </div>
+
+    {% endfor %}
+    <!-- RECOVERY -->
+    <div class="row" style="margin-top: 35px">
+      <div class="col-md-8">
+        <div class="full margin_bottom_30">
+          <div class="accordion border_circle">
+            <div class="bs-example">
+              <div class="panel-group" id="accordion">
+                {% for recovery in recoveries %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ recovery.id }}"><i class="fa fa-bar-chart" aria-hidden="true"></i>{{ recovery.title }}<i class="fa fa-angle-down"></i></a> </p>
+                  </div>
+                  <div id="collapse{{ recovery.id }}" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                      <p>{{ recovery.description }}</p>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        {% for information in informations %}
+        <div class="full" style="margin-top: 35px;">
+          <h3>{{ information.need_recovery_title }}</h3>
+          <p>{{ information.need_recovery_text }}</p>
+          <p><a class="btn main_bt" href="#">Подробнее</a></p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+
+<!-- section ABOUT SERVICE -->
+<div class="section padding_layout_1 light_silver gross_layout">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_left">
+            <h2>Об Услугах</h2>
+            <p class="large">Простой и эффективный способ починить ваше устройство.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          {% for about_service in about_services %}
+          <div class="col-md-6">
+            <div class="full">
+              <div class="service_blog_inner2">
+                <div class="icon text_align_left"><i class="fa {{ about_service.name }}"></i></div>
+                <h4 class="service-heading">{{ about_service.title }}</h4>
+                <p>{{ about_service.description }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+
+<!-- section STAFF -->
+<div class="section padding_layout_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_left">
+            <h2>Специалисты</h2>
+            <p class="large">Наши специалисты неоднократно появлялись в прессе.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      {% for staff in staffs %}
+      <div class="col-md-3 col-sm-6">
+        <div class="full team_blog_colum">
+          <div class="it_team_img"> <img class="img-responsive" src="/media/{{ staff.logo }}" alt="#"> </div>
+          <div class="team_feature_head">
+            <h4>{{ staff.first_name }} {{ staff.last_name }}</h4>
+          </div>
+          <div class="team_feature_social">
+            <div class="social_icon">
+              <ul class="list-inline">
+                <li><a class="fa fa-facebook" href="{{ staff.facebook }}" title="Facebook" target="_blank"></a></li>
+                <li><a class="fa fa-google-plus" href="{{ staff.gmail }}" title="Google+" target="_blank"></a></li>
+                <li><a class="fa fa-twitter" href="{{ staff.twitter }}" title="Twitter" target="_blank"></a></li>
+                <li><a class="fa fa-whatsapp" href="{{ staff.whatsapp }}" title="WhatsApp" target="_blank"></a></li>
+                <li><a class="fa fa-instagram" href="{{ staff.instagram }}" title="Instagram" target="_blank"></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+
+
+
+
+
+{% endblock %}

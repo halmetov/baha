@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- inner page banner -->
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">Подробности Блога</h1>
+              <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li class="active">Подробности Блога</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end inner page banner -->
+
+<!-- section BLOG -->
+<div class="section padding_layout_1 blog_grid">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-right">
+        <div class="full">
+          <div class="blog_section margin_bottom_0">
+            <div class="blog_feature_img"> <img class="img-responsive" src="/media/{{ blog_detail.logo }}" alt="#"> </div>
+            <div class="blog_feature_cantant">
+              <p class="blog_head">{{ blog_detail.title }}</p>
+              <div class="post_info">
+                <ul>
+                  <li><i class="fa fa-user" aria-hidden="true"></i>{{ blog_detail.category }}</li>
+                  <li><i class="fa fa-comment" aria-hidden="true"></i> 5</li>
+                  <li><i class="fa fa-calendar" aria-hidden="true"></i> {{ blog_detail.date }}</li>
+                </ul>
+              </div>
+              <p>{{ blog_detail.main_description }}</p>
+            </div>
+
+            {% for blog_quote in blog_quotes %}
+            {% if blog_quote.action.id == blog_detail.id  %}
+            <div class="full testimonial_simple_say margin_bottom_30_all" style="margin-top:0;">
+              <div class="qoute_testimonial"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
+              <p class="margin_bottom_0"><i>{{ blog_quote.description }}</i></p>
+              <p class="large_2 theme_color">{{ blog_quote.first_name }} {{ blog_quote.last_name }}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <p>{{ blog_detail.more_description }} </p>
+            <div class="bottom_info margin_bottom_30_all">
+              <div class="pull-right">
+                <div class="shr">Поделиться: </div>
+                <div class="social_icon">
+                  <ul>
+                    <li class="fb"><a href="{{ blog_detail.facebook }}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                      <li class="twi"><a href="{{ blog_detail.twitter }}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                      <li class="gp"><a href="{{ blog_detail.gmail }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                      <li class="pint"><a href="{{ blog_detail.whatsapp }}"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="comment_section">
+              <div class="pull-left text_align_left">
+                <div class="full">
+                  <div class="preview_commt"> <a class="comment_cantrol preview_commat" href="/blog/{{ prev_blog.id }}/"> <img class="img-responsive" src="/media/{{ prev_blog.logo }}" alt="#"> <span><i class="fa fa-angle-left"></i> Предыдущий</span> </a> </div>
+                </div>
+              </div>
+              <div class="pull-right text_align_right">
+                <div class="full">
+                  <div class="next_commt"> <a class="comment_cantrol preview_commat" href="/blog/{{ next_blog.id }}/"> <img class="img-responsive" src="/media/{{ next_blog.logo }}" alt="#"> <span>Следующий <i class="fa fa-angle-right"></i></span> </a> </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOG COMMENT -->
+            <div class="view_commant">
+              {% for blog_comment in blog_comments %}
+              {% if blog_comment.comment_id == 0 %}
+              <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                  <div class="full"> <img class="img-responsive" style="max-width:100px" src="/media/{{ blog_comment.logo }}" alt="#"> </div>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                  <div class="full theme_bg white_fonts command_cont" style="background:#254553;">
+                    <p class="comm_head">{{ blog_comment.name }} <span>{{ blog_comment.date }}</span><a onclick="salom({{ blog_comment.id }})" class="rply" href="#BLOG_COMMENT">Ответить</a></p>
+                    <p>{{ blog_comment.text }}</p>
+                  </div>
+                </div>
+
+                <!-- BLOG COMMENT  REPLY-->
+                {% for bc in blog_comments %}
+                {% if bc.comment_id == blog_comment.id %}
+                <div class="full">
+                    <div class="row">
+                      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                        <div class="full"> <img class="img-responsive" style="max-width:100px" src="/media/{{ bc.logo }}" alt="#"> </div>
+                      </div>
+                      <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                        <div class="full command_cont margin_bottom_0">
+                          <p class="comm_head">{{ bc.name }} <span>{{ bc.date }}</span></p>
+                          <p>{{ bc.text }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+
+
+
+
+
+
+
+            <!-- BLOG COMMENT FORM -->
+            <div class="post_commt_form" id="BLOG_COMMENT">
+              <h4>ОСТАВИТЬ КОММЕНТАРИЙ</h4>
+              <div class="form_section">
+                <form class="form_contant" action="/blog/{{ blog_detail.id }}/" method="POST"> {% csrf_token %}
+                  <fieldset class="row">
+                  <div class="field col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <input type="hidden" id="COMMENT_ID" name="comment_id" value="0">
+                    <input type="hidden"  name="blog_id" value="{{ blog_detail.id }}">
+                    <input class="field_custom" name="email" placeholder="Электронная почта" type="email" required>
+                  </div>
+                  <div class="field col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <input class="field_custom" name="phone" placeholder="Телефон" type="text" required>
+                  </div>
+                  <div class="field col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <input class="field_custom" name="name" placeholder="Имя" type="text" required>
+                  </div>
+                  <div class="field col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <textarea class="field_custom" name="text" placeholder="Комментарий" required></textarea>
+                  </div>
+                  <div class="center">
+                    <button type="submit" class="btn main_bt">комментировать</button>
+                  </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-left">
+        <div class="side_bar">
+          <div class="side_bar_blog">
+            <h4>ПОИСК</h4>
+            <div class="side_bar_search">
+              <div class="input-group stylish-input-group">
+                <input class="form-control" placeholder="Поиск" type="text">
+                <span class="input-group-addon">
+                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span> </div>
+            </div>
+          </div>
+          {% for information in informations %}
+          <div class="side_bar_blog">
+            <h4>{{ information.blog_right_title }}</h4>
+            <p>{{ information.blog_right_description }}</p>
+          </div>
+          {% endfor %}
+
+          <div class="side_bar_blog">
+            <h4>ПОСЛЕДНИЕ БЛОГИ</h4>
+            <div class="recent_post">
+              <ul>
+                {% for latest_blog in latest_blogs %}
+                <li>
+                  <p class="post_head"><a href="#">{{ latest_blog.title }}</a></p>
+                  <p class="post_date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ latest_blog.date }}</p>
+                </li>
+                {% endfor  %}
+              </ul>
+            </div>
+          </div>
+          <div class="side_bar_blog">
+            <h4>КАТЕГОРИИ</h4>
+            <div class="categary">
+              <ul>
+                {% for blog_category in blog_categories %}
+                <li><a href="#"><i class="fa fa-caret-right"></i>{{ blog_category.category }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="side_bar_blog">
+            <h4>МЕТКА</h4>
+            <div class="tags">
+              <ul>
+                <li><a href="#">Bootstrap</a></li>
+                <li><a href="#">HTML5</a></li>
+                <li><a href="#">Wordpress</a></li>
+                <li><a href="#">Bootstrap</a></li>
+                <li><a href="#">HTML5</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="side_bar_blog">
+            <h4>КАТЕГОРИИ</h4>
+            <div class="categary">
+              <ul>
+                <li><a href="#"><i class="fa fa-caret-right"></i> June (12)</a></li>
+                <li><a href="#"><i class="fa fa-caret-right"></i> January (12)</a></li>
+                <li><a href="#"><i class="fa fa-caret-right"></i> March (12)</a></li>
+                <li><a href="#"><i class="fa fa-caret-right"></i> November (12)</a></li>
+                <li><a href="#"><i class="fa fa-caret-right"></i> December (12)</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+<script>
+  function salom(soz){
+    document.getElementById('COMMENT_ID').value = soz;
+    return false;
+  }
+</script>
+
+{% endblock %}

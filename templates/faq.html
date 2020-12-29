@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- inner page banner -->
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">FAQ</h1>
+              <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li>Страницы</li>
+                <li class="active">FAQ</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end inner page banner -->
+
+
+<!-- section FAQ-->
+<div class="section padding_layout_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row" style="margin-bottom: 30px;">
+          <div class="col-md-12">
+            <div class="full margin_bottom_30">
+              <div class="accordion border_circle">
+                <div class="bs-example">
+                  <div class="panel-group" id="accordion" style="margin-top: 0;">
+                      {% for faq in faqs %}
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <p class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ faq.id }}">{{ faq.id }}.
+                            {{ faq.title }}<i class="fa fa-angle-down"></i></a> </p>
+                      </div>
+                      <div id="collapse{{ faq.id }}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                          <p>{{ faq.description }} </p>
+                        </div>
+                      </div>
+                    </div>
+                      {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% for service_process in service_processs %}
+          <div class="col-md-4">
+            <div class="full">
+              <div class="service_blog_inner">
+                <div class="icon text_align_left"><img src="/media/{{ service_process.logo }}" alt="#"></div>
+                <h4 class="service-heading">{{ service_process.title }}</h4>
+                <p>{{ service_process.description }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="col-md-12">
+            {% for information in informations %}
+            <div class="full" style="margin-top: 15px;">
+              <h3>{{ information.need_recovery_title }}</h3>
+              <p>{{ information.need_recovery_text }}</p>
+              <p><a class="btn main_bt" href="#">Подробнее</a></p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="full">
+              <div class="main_heading text_align_left">
+                <h2>Опытные Специалисты</h2>
+                <p class="large">Наши специалисты неоднократно появлялись в прессе.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+      {% for ex_staff in ex_staffs  %}
+      <div class="col-md-3 col-sm-6">
+        <div class="full team_blog_colum">
+          <div class="it_team_img"> <img class="img-responsive" src="/media/{{ ex_staff.logo }}" alt="#"> </div>
+          <div class="team_feature_head">
+            <h4>{{ ex_staff.first_name }} {{ ex_staff.last_name }}</h4>
+          </div>
+          <div class="team_feature_social">
+            <div class="social_icon">
+              <ul class="list-inline">
+                <li><a class="fa fa-facebook" href="{{ ex_staff.facebook }}" title="Facebook" target="_blank"></a></li>
+                <li><a class="fa fa-google-plus" href="{{ ex_staff.gmail }}" title="Google+" target="_blank"></a></li>
+                <li><a class="fa fa-twitter" href="{{ ex_staff.twitter }}" title="Twitter" target="_blank"></a></li>
+                <li><a class="fa fa-whatsapp" href="{{ ex_staff.whatsapp }}" title="WhatsApp" target="_blank"></a></li>
+                <li><a class="fa fa-instagram" href="{{ ex_staff.instagram }}" title="Instagram" target="_blank"></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+      </div>
+      <div class="col-md-3">
+        <div class="side_bar">
+          <div class="side_bar_blog">
+            <h4>ПОИСК</h4>
+            <div class="side_bar_search">
+              <div class="input-group stylish-input-group">
+                <input class="form-control" placeholder="Поиск" type="text">
+                <span class="input-group-addon">
+                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span> </div>
+            </div>
+          </div>
+          <div class="side_bar_blog">
+            <h4>GET A QUOTE</h4>
+            <p>An duo lorem altera gloriatur. No imperdiet adver sarium pro. No sit sumo lorem. Mei ea eius elitr consequ unturimperdiet.</p>
+            <a class="btn sqaure_bt" href="it_service.html">View Service</a> </div>
+          <div class="side_bar_blog">
+            <h4>OUR SERVICE</h4>
+            <div class="categary">
+              <ul>
+                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> Data recovery</a></li>
+                <li><a href="it_computer_repair.html"><i class="fa fa-angle-right"></i> Computer repair</a></li>
+                <li><a href="it_mobile_service.html"><i class="fa fa-angle-right"></i> Mobile service</a></li>
+                <li><a href="it_network_solution.html"><i class="fa fa-angle-right"></i> Network solutions</a></li>
+                <li><a href="it_techn_support.html"><i class="fa fa-angle-right"></i> Technical support</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="side_bar_blog">
+            <h4>RECENT NEWS</h4>
+            <div class="categary">
+              <ul>
+                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> Land lights let be divided</a></li>
+                <li><a href="it_computer_repair.html"><i class="fa fa-angle-right"></i> Seasons over bearing air</a></li>
+                <li><a href="it_mobile_service.html"><i class="fa fa-angle-right"></i> Greater open after grass</a></li>
+                <li><a href="it_network_solution.html"><i class="fa fa-angle-right"></i> Gathered was divide second</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+
+
+
+{% endblock %}
