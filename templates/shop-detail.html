@@ -43,7 +43,7 @@
             <div class="detail-contant">
               <p>{{ product.mini_description }}<br>
                 <span class="stock">2 в наличии</span> </p>
-              <form class="cart" method="post" action="it_cart.html">
+              <form class="cart" method="post" action="">
                 <div class="quantity">
                   <input step="1" min="1" max="5" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" type="number">
                 </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-8">
                           <h5>{{ product_comment.name }}</h5>
-                          <p><span class="c_date">{{ product_comment.date }}</span> | <span><a rel="nofollow" class="comment-reply-link" href="#SHOP_COMMENT">hello</a></span></p>
+                          <p><span class="c_date">{{ product_comment.date }}</span> | <span><a rel="nofollow" class="js-product-comment comment-reply-link" href="#">Ответить</a></span></p>
                           <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </span>
                           <p class="msg">{{ product_comment.text }}</p>
                         </div>
@@ -95,17 +95,17 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="full review_bt_section">
-                            <div class="float-right"> <a class="btn sqaure_bt" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Оставить отзыв</a> </div>
+                            <div class="float-right"> <a class="js-sq btn sqaure_bt" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Оставить отзыв</a> </div>
                           </div>
 
                           <div class="full" id="SHOP_COMMENT">
                             <div id="collapseExample" class="full collapse commant_box">
 
-                              <form accept-charset="UTF-8" action="index.html" method="post">{% csrf_token %}
+                              <form accept-charset="UTF-8" action="" method="post">{% csrf_token %}
 
                                 <input type="hidden" id="COMMENT_ID" name="comment_id" value="0">
                                 <input class="field_custom" name="name" placeholder="Имя" type="text" required>
-                                <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." required=""></textarea>
+                                <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Оставьте свой отзыв..." required=""></textarea>
                                 <div class="full_bt center">
                                   <button class="btn sqaure_bt" type="submit">Сохранить</button>
                                 </div>
@@ -198,9 +198,16 @@
   </div>
 </div>
 <!-- end section -->
-function salom(soz){
+<script>
+  function salom(soz){
     document.getElementById('COMMENT_ID').value = soz;
     return false;
   }
+  jQuery('.js-product-comment').click(function(){
+    jQuery('.js-sq').click()
+    return false
+  })
+</script>
+
 
 {% endblock %}

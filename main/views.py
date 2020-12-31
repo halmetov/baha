@@ -337,3 +337,16 @@ def contactHandler(request):
         'services': services,
         'contacts': contacts,
     })
+
+
+def Handler404(request):
+    informations = Information.objects.all()
+    services = Service.objects.filter()
+    contacts = Contact.objects.filter()
+
+    return render(request, '404.html', {
+        'active_page': 'price',
+        'informations': informations,
+        'services': services,
+        'contacts': contacts,
+    })
