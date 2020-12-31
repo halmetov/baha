@@ -339,14 +339,31 @@ def contactHandler(request):
     })
 
 
+
 def Handler404(request):
     informations = Information.objects.all()
     services = Service.objects.filter()
     contacts = Contact.objects.filter()
 
     return render(request, '404.html', {
-        'active_page': 'price',
         'informations': informations,
         'services': services,
         'contacts': contacts,
+    })
+
+
+
+def applicationHandler(request):
+    client_sayss = ClientSays.objects.filter(status=0)
+    informations = Information.objects.all()
+    brands = Brand.objects.filter()[:5]
+    services = Service.objects.filter()
+
+
+
+    return render(request, 'application.html', {
+        'client_sayss': client_sayss,
+        'informations': informations,
+        'brands': brands,
+        'services': services,
     })
