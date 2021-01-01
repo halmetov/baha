@@ -43,4 +43,5 @@ urlpatterns = [
     path('shop/<int:product_id>/', shop_detailHandler),
     path('contact/', contactHandler),
     path('application/', applicationHandler),
+    path('*', Handler404),
 ]
