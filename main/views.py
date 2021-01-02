@@ -2,7 +2,8 @@ from django.shortcuts import render
 from datetime import datetime
 import math
 from main.models import ClientSays, Information, Brand, Service, BestService, Recovery, ServiceProcess, Product, \
-    Feedback, Blog, Staff, About_service, About, About_action, BlogQoute, Blogcomment, Price, Faq, Contact, Productcomment
+    Feedback, Blog, Staff, About_service, About, About_action, BlogQoute, Blogcomment, Price, Faq, Contact,\
+    Productcomment, ProductCategory, BlogCategory
 # Create your views here.
 
 
@@ -112,6 +113,7 @@ def service_detailHandler(request, detail_id):
     services = Service.objects.filter()
     ex_staffs = Staff.objects.filter(is_experienced=True)
     recoveries = Recovery.objects.filter()
+    blogs = Blog.objects.filter()[:6]
     if detail.id == 1:
         prev_service = Service.objects.get(id=int(detail_id) + 2)
     else:
@@ -131,6 +133,7 @@ def service_detailHandler(request, detail_id):
         'services': services,
         'ex_staffs': ex_staffs,
         'recoveries': recoveries,
+        'blogs': blogs,
         'prev_service': prev_service,
         'next_service': next_service,
 
@@ -150,7 +153,7 @@ def blogHandler(request):
     services = Service.objects.filter()
     blogs = Blog.objects.filter()[start:stop]
     latest_blogs = Blog.objects.filter(is_latest=True)[:4]
-    blog_categories = Blog.objects.filter()[:4]
+    categories = BlogCategory.objects.filter()
 
     total = Blog.objects.count()
     prev_page = current_page-1
@@ -175,7 +178,7 @@ def blogHandler(request):
         'services': services,
         'blogs': blogs,
         'latest_blogs': latest_blogs,
-        'blog_categories': blog_categories,
+        'categories': categories,
     })
 
 
@@ -202,6 +205,7 @@ def blog_detailHandler(request, blog_detail_id):
     latest_blogs = Blog.objects.filter(is_latest=True)[:4]
     blog_categories = Blog.objects.filter()[:4]
     blog_comments = Blogcomment.objects.filter(blog_id=int(blog_detail_id))
+    categories =BlogCategory.objects.filter()
 
     if blog_detail.id == 1:
         prev_blog = Blog.objects.get(id=int(blog_detail_id) + 2)
@@ -226,6 +230,7 @@ def blog_detailHandler(request, blog_detail_id):
         'latest_blogs': latest_blogs,
         'blog_categories': blog_categories,
         'blog_comments': blog_comments,
+        'categories': categories,
 
     })
 
@@ -273,7 +278,7 @@ def faqHandler(request):
 
 
 def shopHandler(request):
-    limit = int(request.GET.get('limit', 2))
+    limit = int(request.GET.get('limit', 3))
     p = int(request.GET.get('p', 1))
     stop = p * limit
     start = (p - 1) * limit
@@ -285,11 +290,11 @@ def shopHandler(request):
     next_p = p + 1
 
 
-
+    categories = ProductCategory.objects.filter()
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
-    services = Service.objects.filter()
+    services = Service.objects.filter()[:6]
 
     return render(request, 'shop.html', {
         'active_page': 'shop',
@@ -298,6 +303,7 @@ def shopHandler(request):
         'brands': brands,
         'services': services,
         'products': products,
+        'categories': categories,
 
         'limit': limit,
         'p': p,
@@ -326,9 +332,10 @@ def shop_detailHandler(request, product_id):
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
-    services = Service.objects.filter()
+    services = Service.objects.filter()[:6]
     relateds = Product.objects.filter(is_related=True )[:3]
     product_comments = Productcomment.objects.filter()
+    categories = ProductCategory.objects.filter()
 
     return render(request, 'shop-detail.html', {
         'product': product,
@@ -339,6 +346,7 @@ def shop_detailHandler(request, product_id):
         'services': services,
         'relateds': relateds,
         'product_comments': product_comments,
+        'categories': categories,
     })
 
 

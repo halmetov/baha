@@ -169,19 +169,18 @@
             <div class="categary">
               <ul>
                 {% for service in services %}
-                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> {{ service.title  }}</a></li>
+                <li><a href="#"><i class="fa fa-angle-right"></i> {{ service.title  }}</a></li>
                 {% endfor %}
               </ul>
             </div>
           </div>
           <div class="side_bar_blog">
-            <h4>ПОСЛЕДНИЕ НОВОСТИ</h4>
+            <h4>ПОСЛЕДНИЕ БЛОГИ</h4>
             <div class="categary">
               <ul>
-                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> Земельные огни пусть будут разделены</a></li>
-                <li><a href="it_computer_repair.html"><i class="fa fa-angle-right"></i> Времена года над несущим воздухом</a></li>
-                <li><a href="it_mobile_service.html"><i class="fa fa-angle-right"></i> Большая открытая после травы</a></li>
-                <li><a href="it_network_solution.html"><i class="fa fa-angle-right"></i> Собрался было делить второе</a></li>
+                {% for blog in blogs %}
+                <li><a href="#"><i class="fa fa-angle-right"></i> {{ blog.title }}</a></li>
+                {% endfor %}
               </ul>
             </div>
           </div>
