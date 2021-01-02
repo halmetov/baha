@@ -76,6 +76,7 @@
       </div>
       <div class="col-md-3">
         <div class="side_bar">
+
           <div class="side_bar_blog">
             <h4>ПОИСК</h4>
             <div class="side_bar_search">
@@ -83,15 +84,18 @@
                 <input class="form-control" placeholder="Поиск" type="text">
                 <span class="input-group-addon">
                 <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </span> </div>
+                </span>
+              </div>
             </div>
           </div>
+
           <div class="side_bar_blog">
             <h4>КАТЕГОРИИ</h4>
             <div class="categary">
               <ul>
+                <li {% if not category_id  %} class="active" {% endif %} ><a href="/shop/?limit={{ limit }}&category_id=0"><i class="fa fa-angle-right"></i> ВСЕ ТОВАРЫ</a></li>
                 {% for category in categories %}
-                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> {{ category.title }}</a></li>
+                <li {% if category_id == category.id %} class="active" {% endif %} ><a href="/shop/?limit={{ limit }}&category_id={{ category.id }}"><i class="fa fa-angle-right"></i> {{ category.title }}{% if category_id == category.id %} ({{ item_count }}) {% endif %}</a></li>
                 {% endfor %}
               </ul>
             </div>
@@ -101,7 +105,7 @@
             <div class="categary">
               <ul>
                 {% for service in services %}
-                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> {{ service.title }}</a></li>
+                <li><a href="#"><i class="fa fa-angle-right"></i> {{ service.title }}</a></li>
                 {% endfor %}
               </ul>
             </div>
