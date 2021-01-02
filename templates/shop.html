@@ -50,6 +50,26 @@
           </div>
             {% endfor %}
         </div>
+        <div class="center">
+            <ul class="pagination style_1">
+              {% if p != 1 %}
+              <li><a href="/shop?limit={{ limit }}&p={{ prev_p }}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+              {% endif %}
+
+              {% for x in page_range %}
+                {% if p == x %}
+                <li class="active"><a href="#">{{ x }}</a></li>
+                {% else %}
+                <li><a href="/shop?limit={{ limit }}&p={{ x }}">{{ x }}</a></li>
+                {% endif %}
+              {% endfor %}
+
+              {% if p < page_count  %}
+              <li><a href="/shop?limit={{ limit }}&p={{ next_p }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              {% endif %}
+
+            </ul>
+        </div>
       </div>
       <div class="col-md-3">
         <div class="side_bar">

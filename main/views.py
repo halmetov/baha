@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from datetime import datetime
-
+import math
 from main.models import ClientSays, Information, Brand, Service, BestService, Recovery, ServiceProcess, Product, \
     Feedback, Blog, Staff, About_service, About, About_action, BlogQoute, Blogcomment, Price, Faq, Contact, Productcomment
 # Create your views here.
@@ -273,11 +273,23 @@ def faqHandler(request):
 
 
 def shopHandler(request):
+    limit = int(request.GET.get('limit', 2))
+    p = int(request.GET.get('p', 1))
+    stop = p * limit
+    start = (p - 1) * limit
+    products = Product.objects.filter()[start:stop]
+    item_count = Product.objects.count()
+    page_count = math.ceil(item_count / limit)
+    page_range = range(1, page_count + 1)
+    prev_p = p - 1
+    next_p = p + 1
+
+
+
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
     services = Service.objects.filter()
-    products = Product.objects.all()
 
     return render(request, 'shop.html', {
         'active_page': 'shop',
@@ -286,6 +298,14 @@ def shopHandler(request):
         'brands': brands,
         'services': services,
         'products': products,
+
+        'limit': limit,
+        'p': p,
+        'page_count': page_count,
+        'page_range': page_range,
+        'prev_p': prev_p,
+        'next_p': next_p
+
     })
 
 
