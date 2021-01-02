@@ -178,3 +178,17 @@ class ProductcommentAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Productcomment, ProductcommentAdmin)
+
+
+###################################################
+class ProductCategoryAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(ProductCategory, ProductCategoryAdmin)
+
+
+###################################################
+class BlogCategoryAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(BlogCategory, BlogCategoryAdmin)

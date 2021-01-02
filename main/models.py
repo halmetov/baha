@@ -113,7 +113,19 @@ class Staff(models.Model):
         return self.first_name
 
 
+
+class ProductCategory(models.Model):
+    title = models.CharField(max_length=300)
+    status = models.IntegerField(default=0, blank=True)
+    rating = models.IntegerField(default=0, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+
 class Product(models.Model):
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, default=True)
     title = models.CharField(max_length=300)
     logo = models.ImageField(upload_to='upload')
     old_price = models.FloatField(default=0.0)
@@ -159,12 +171,25 @@ class Feedback(models.Model):
         return self.title
 
 
+
+class BlogCategory(models.Model):
+    title = models.CharField(max_length=300)
+    is_main = models.BooleanField(blank=True)
+    status = models.IntegerField(default=0, blank=True)
+    rating = models.IntegerField(default=0, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+
 class Blog(models.Model):
+    which_one = models.ForeignKey(BlogCategory, on_delete=models.CASCADE, default=True)
     title = models.CharField(max_length=300)
     main_description = models.CharField(max_length=300)
     more_description = models.TextField(blank=True)
     logo = models.ImageField(upload_to='upload')
-    category = models.CharField(max_length=300, blank=True)
     date = models.DateField()
     is_latest = models.BooleanField(blank=True)
     facebook = models.CharField(max_length=300, blank=True)
