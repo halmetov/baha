@@ -278,6 +278,7 @@ def faqHandler(request):
 
 
 def shopHandler(request):
+    q = request.GET.get('q', '')
     category_id = int(request.GET.get('category_id', 0))
 
     limit = int(request.GET.get('limit', 3))
@@ -285,13 +286,16 @@ def shopHandler(request):
     stop = p * limit
     start = (p - 1) * limit
 
-
-    if category_id:
-        products = Product.objects.filter(status=0).filter(category__id=category_id)[start:stop]
-        item_count = Product.objects.filter(status=0).filter(category__id=category_id).count()
+    if q:
+        products = Product.objects.filter(status=0).filter(price__contains=q)[start:stop]
+        item_count = Product.objects.filter(status=0).filter(price__contains=q).count()
     else:
-        products = Product.objects.filter()[start:stop]
-        item_count = Product.objects.count()
+        if category_id:
+            products = Product.objects.filter(status=0).filter(category__id=category_id)[start:stop]
+            item_count = Product.objects.filter(status=0).filter(category__id=category_id).count()
+        else:
+            products = Product.objects.filter()[start:stop]
+            item_count = Product.objects.count()
 
     page_count = math.ceil(item_count / limit)
     page_range = range(1, page_count + 1)
@@ -322,6 +326,7 @@ def shopHandler(request):
         'next_p': next_p,
 
         'category_id': category_id,
+        'q': q,
 
     })
 
