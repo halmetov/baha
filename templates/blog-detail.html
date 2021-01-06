@@ -182,7 +182,7 @@
               <ul>
                 {% for latest_blog in latest_blogs %}
                 <li>
-                  <p class="post_head"><a href="#">{{ latest_blog.title }}</a></p>
+                  <p class="post_head"><a href="/blog/{{ latest_blog.id }}/">{{ latest_blog.title }}</a></p>
                   <p class="post_date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ latest_blog.date }}</p>
                 </li>
                 {% endfor  %}

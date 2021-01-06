@@ -1,9 +1,10 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from datetime import datetime
 import math
 from main.models import ClientSays, Information, Brand, Service, BestService, Recovery, ServiceProcess, Product, \
     Feedback, Blog, Staff, About_service, About, About_action, BlogQoute, Blogcomment, Price, Faq, Contact,\
-    Productcomment, ProductCategory, BlogCategory
+    Productcomment, ProductCategory, BlogCategory, ContactPost
 # Create your views here.
 
 
@@ -287,8 +288,8 @@ def shopHandler(request):
     start = (p - 1) * limit
 
     if q:
-        products = Product.objects.filter(status=0).filter(price__contains=q)[start:stop]
-        item_count = Product.objects.filter(status=0).filter(price__contains=q).count()
+        products = Product.objects.filter(status=0).filter(title__contains=q)[start:stop]
+        item_count = Product.objects.filter(status=0).filter(title__contains=q).count()
     else:
         if category_id:
             products = Product.objects.filter(status=0).filter(category__id=category_id)[start:stop]
@@ -344,6 +345,8 @@ def shop_detailHandler(request, product_id):
         new_product_comment.save()
 
 
+
+
     product = Product.objects.get(id=int(product_id))
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
@@ -367,20 +370,37 @@ def shop_detailHandler(request, product_id):
 
 
 def contactHandler(request):
-    client_sayss = ClientSays.objects.filter(status=0)
-    informations = Information.objects.all()
-    brands = Brand.objects.filter()[:5]
-    services = Service.objects.filter()
-    contacts = Contact.objects.filter()
+    if request.method == 'GET':
+        client_sayss = ClientSays.objects.filter(status=0)
+        informations = Information.objects.all()
+        brands = Brand.objects.filter()[:5]
+        services = Service.objects.filter()
+        contacts = Contact.objects.filter()
 
-    return render(request, 'contact.html', {
-        'active_page': 'contact',
-        'client_sayss': client_sayss,
-        'informations': informations,
-        'brands': brands,
-        'services': services,
-        'contacts': contacts,
-    })
+        return render(request, 'contact.html', {
+            'active_page': 'contact',
+            'client_sayss': client_sayss,
+            'informations': informations,
+            'brands': brands,
+            'services': services,
+            'contacts': contacts,
+        })
+    else:
+        r = ContactPost()
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        message = request.POST.get('message', '')
+
+        r.first_name = first_name
+        r.last_name = last_name
+        r.email = email
+        r.phone = phone
+        r.message = message
+        r.save()
+
+        return JsonResponse({'success': True, 'errorMsg': '', '_success': True})
 
 
 

@@ -64,25 +64,26 @@
               <h4>Будьте на связи</h4>
               <p>Наша цель - обеспечить лучшее обслуживание клиентов и своевременно ответить на все ваши вопросы.</p>
               <div class="form_section">
-                <form class="form_contant" action="index.html">
+                <form id="request" class="form_contant" action="/" method="post">
                   <fieldset>
+                    {% csrf_token %}
                   <div class="row">
                     <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <input class="field_custom" placeholder="Ваше имя" type="text" required />
+                      <input class="field_custom" placeholder="Ваше имя" name="first_name" type="text" required />
                     </div>
                     <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <input class="field_custom" placeholder="Ваша фамилия" type="text" required />
+                      <input class="field_custom" placeholder="Ваша фамилия" name="last_name" type="text" required />
                     </div>
                     <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <input class="field_custom" placeholder="Адрес электронной почты" type="email" required />
+                      <input class="field_custom" placeholder="Адрес электронной почты" name="email" type="email" required />
                     </div>
                     <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <input class="field_custom" placeholder="Номер телефона" type="text" required />
+                      <input class="field_custom" placeholder="Номер телефона" name="phone" type="phone" required />
                     </div>
                     <div class="field col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <textarea class="field_custom" placeholder="Мессенджер" required ></textarea>
+                      <textarea class="field_custom" placeholder="Мессенджер" name="message" required ></textarea>
                     </div>
-                    <div class="center"><a class="btn main_bt" href="#">ОТПРАВИТЬ</a></div>
+                    <button class="btn main_bt"> ОТПРАВИТЬ </button>
                   </div>
                   </fieldset>
                 </form>

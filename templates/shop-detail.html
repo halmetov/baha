@@ -167,10 +167,11 @@
           </div>
           <div class="side_bar_blog">
             <h4>КАТЕГОРИИ</h4>
-            <div class="categary">
+             <div class="categary">
               <ul>
+                <li {% if not category_id  %} class="active" {% endif %} ><a href="/shop/?category_id=0"><i class="fa fa-angle-right"></i> ВСЕ ТОВАРЫ</a></li>
                 {% for category in categories %}
-                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> {{ category.title }}</a></li>
+                <li {% if category_id == category.id %} class="active" {% endif %} ><a href="/shop/?category_id={{ category.id }}"><i class="fa fa-angle-right"></i> {{ category.title }} {% if category_id == category.id %} ({{ item_count }}) {% endif %}</a></li>
                 {% endfor %}
               </ul>
             </div>
@@ -180,7 +181,7 @@
             <div class="categary">
               <ul>
                 {% for service in services %}
-                <li><a href="it_data_recovery.html"><i class="fa fa-angle-right"></i> {{ service.title }}</a></li>
+                <li><a href="/service-detail/{{ service.id }}/"><i class="fa fa-angle-right"></i> {{ service.title }}</a></li>
                 {% endfor %}
               </ul>
             </div>

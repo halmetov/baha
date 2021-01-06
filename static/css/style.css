@@ -2357,7 +2357,7 @@ span.skill {
 .testimonial_slider .carousel-control {
 	width: 40px;
 	height: 40px;
-	background: #ebebeb;
+	background: #383434;
 	border-radius: 100%;
 	text-align: center;
 	line-height: 40px;
@@ -2541,7 +2541,7 @@ span.skill {
 
 .price_head {
 	min-height: 185px;
-	background: #ebebeb;
+	background: #383434;
 }
 
 .price_no {
@@ -2566,7 +2566,7 @@ span.skill {
 
 .price_head {
 	min-height: auto;
-	background: #ebebeb;
+	background: #383434;
 	padding: 45px 25px;
 }
 
