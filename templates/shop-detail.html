@@ -169,9 +169,9 @@
             <h4>КАТЕГОРИИ</h4>
              <div class="categary">
               <ul>
-                <li {% if not category_id  %} class="active" {% endif %} ><a href="/shop/?category_id=0"><i class="fa fa-angle-right"></i> ВСЕ ТОВАРЫ</a></li>
+                <li {% if not category_id  %} class="active" {% endif %} ><a href="/shop/?limit={{ limit }}&category_id=0"><i class="fa fa-angle-right"></i> ВСЕ ТОВАРЫ {% if category_id == 0 %} ({{ item_count }}) {% endif %}</a></li>
                 {% for category in categories %}
-                <li {% if category_id == category.id %} class="active" {% endif %} ><a href="/shop/?category_id={{ category.id }}"><i class="fa fa-angle-right"></i> {{ category.title }} {% if category_id == category.id %} ({{ item_count }}) {% endif %}</a></li>
+                <li {% if category_id == category.id %} class="active" {% endif %} ><a href="/shop/?limit={{ limit }}&category_id={{ category.id }}"><i class="fa fa-angle-right"></i> {{ category.title }} {% if category_id == category.id %} ({{ item_count }}) {% endif %}</a></li>
                 {% endfor %}
               </ul>
             </div>

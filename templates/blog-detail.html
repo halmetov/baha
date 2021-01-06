@@ -193,8 +193,9 @@
             <h4>КАТЕГОРИЯ БЛОКОВ</h4>
             <div class="categary">
               <ul>
+                <li {% if not which_one_id  %} class="active" {% endif %} ><a href="/blog/?limit={{ limit }}&which_one_id=0"><i class="fa fa-angle-right"></i> ВСЕ БЛОГИ {% if which_one_id == 0 %} ({{ total }}) {% endif %}</a></li>
                 {% for category in categories %}
-                <li><a href="#"><i class="fa fa-caret-right"></i>{{ category.title }}</a></li>
+                <li {% if which_one_id == category.id %} class="active" {% endif %} ><a href="/blog/?limit={{ limit }}&which_one_id={{ category.id }}"><i class="fa fa-angle-right"></i> {{ category.title }} {% if which_one_id == category.id %} ({{ total }}) {% endif %}</a></li>
                 {% endfor %}
               </ul>
             </div>

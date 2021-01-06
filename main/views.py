@@ -143,24 +143,33 @@ def service_detailHandler(request, detail_id):
 
 
 def blogHandler(request):
-    limit = int(request.GET.get('limit', 2))
+    which_one_id = int(request.GET.get('which_one_id', 0))
+
+    limit = int(request.GET.get('limit', 1))
     current_page = int(request.GET.get('page', 1))
     stop = current_page * limit
     start = stop - limit
+
+    if which_one_id:
+        blogs = Blog.objects.filter(which_one__id=which_one_id)[start:stop]
+        total = Blog.objects.filter(which_one__id=which_one_id).count()
+    else:
+        blogs = Blog.objects.filter()[start:stop]
+        total = Blog.objects.count()
+
+    prev_page = current_page - 1
+    next_page = 0
+    if total > stop:
+        next_page = current_page + 1
 
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
     services = Service.objects.filter()
-    blogs = Blog.objects.filter()[start:stop]
     latest_blogs = Blog.objects.filter(is_latest=True)[:4]
     categories = BlogCategory.objects.filter()
 
-    total = Blog.objects.count()
-    prev_page = current_page-1
-    next_page = 0
-    if total > stop:
-        next_page = current_page + 1
+
 
 
 
@@ -180,6 +189,8 @@ def blogHandler(request):
         'blogs': blogs,
         'latest_blogs': latest_blogs,
         'categories': categories,
+
+        'which_one_id': which_one_id,
     })
 
 
@@ -197,6 +208,10 @@ def blog_detailHandler(request, blog_detail_id):
         new_post_comment.date = datetime.now()
         new_post_comment.save()
 
+    which_one_id = int(request.GET.get('which_one_id', 0))
+    limit = int(request.GET.get('limit', 1))
+    total = Blog.objects.count()
+
     blog_detail = Blog.objects.get(id=int(blog_detail_id))
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
@@ -206,7 +221,7 @@ def blog_detailHandler(request, blog_detail_id):
     latest_blogs = Blog.objects.filter(is_latest=True)[:4]
     blog_categories = Blog.objects.filter()[:4]
     blog_comments = Blogcomment.objects.filter(blog_id=int(blog_detail_id))
-    categories =BlogCategory.objects.filter()
+    categories = BlogCategory.objects.filter()
 
     if blog_detail.id == 1:
         prev_blog = Blog.objects.get(id=int(blog_detail_id) + 2)
@@ -233,6 +248,9 @@ def blog_detailHandler(request, blog_detail_id):
         'blog_comments': blog_comments,
         'categories': categories,
 
+        'which_one_id': which_one_id,
+        'limit': limit,
+        'total': total,
     })
 
 
@@ -320,6 +338,7 @@ def shopHandler(request):
         'categories': categories,
 
         'limit': limit,
+        'item_count': item_count,
         'p': p,
         'page_count': page_count,
         'page_range': page_range,
@@ -344,8 +363,9 @@ def shop_detailHandler(request, product_id):
         new_product_comment.date = datetime.now()
         new_product_comment.save()
 
-
-
+    category_id = int(request.GET.get('category_id', 0))
+    limit = int(request.GET.get('limit', 3))
+    item_count = Product.objects.count()
 
     product = Product.objects.get(id=int(product_id))
     client_sayss = ClientSays.objects.filter(status=0)
@@ -366,6 +386,10 @@ def shop_detailHandler(request, product_id):
         'relateds': relateds,
         'product_comments': product_comments,
         'categories': categories,
+
+        'category_id': category_id,
+        'limit': limit,
+        'item_count': item_count,
     })
 
 
