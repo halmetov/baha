@@ -55,19 +55,19 @@
         <div class="center">
             <ul class="pagination style_1">
               {% if p != 1 %}
-              <li><a href="/shop?limit={{ limit }}&p={{ prev_p }}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+              <li><a href="/shop?limit={{ limit }}&p={{ prev_p }}{% if category_id %}&category_id={{ category_id }}{% endif %}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
               {% endif %}
 
               {% for x in page_range %}
                 {% if p == x %}
                 <li class="active"><a href="#">{{ x }}</a></li>
                 {% else %}
-                <li><a href="/shop?limit={{ limit }}&p={{ x }}">{{ x }}</a></li>
+                <li><a href="/shop?limit={{ limit }}&p={{ x }}{% if category_id %}&category_id={{ category_id }}{% endif %}">{{ x }}</a></li>
                 {% endif %}
               {% endfor %}
 
               {% if p < page_count  %}
-              <li><a href="/shop?limit={{ limit }}&p={{ next_p }}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              <li><a href="/shop?limit={{ limit }}&p={{ next_p }}{% if category_id %}&category_id={{ category_id }}{% endif %}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
               {% endif %}
 
             </ul>
@@ -77,19 +77,18 @@
       <div class="col-md-3">
         <div class="side_bar">
 
+          <form action="/shop/" method="GET">
           <div class="side_bar_blog">
             <h4>ПОИСК</h4>
             <div class="side_bar_search">
-              <div class="iform_section stylish-input-group">
-                <form class="form_content" method="get" action="/shop/">
-                  <input class="form-control" name="q" placeholder="Поиск" type="text">
-                  <span class="input-group-addon">
-                      <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                  </span>
-                </form>
-              </div>
+              <div class="input-group stylish-input-group">
+                <input class="form-control" placeholder="Поиск" type="text" name="q">
+                <span class="input-group-addon">
+                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </span> </div>
             </div>
           </div>
+          </form>
 
           <div class="side_bar_blog">
             <h4>КАТЕГОРИИ</h4>

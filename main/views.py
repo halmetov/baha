@@ -145,7 +145,7 @@ def service_detailHandler(request, detail_id):
 def blogHandler(request):
     which_one_id = int(request.GET.get('which_one_id', 0))
 
-    limit = int(request.GET.get('limit', 1))
+    limit = int(request.GET.get('limit', 2))
     current_page = int(request.GET.get('page', 1))
     stop = current_page * limit
     start = stop - limit
@@ -209,7 +209,7 @@ def blog_detailHandler(request, blog_detail_id):
         new_post_comment.save()
 
     which_one_id = int(request.GET.get('which_one_id', 0))
-    limit = int(request.GET.get('limit', 1))
+    limit = int(request.GET.get('limit', 2))
     total = Blog.objects.count()
 
     blog_detail = Blog.objects.get(id=int(blog_detail_id))
