@@ -64,9 +64,9 @@
               <h4>Будьте на связи</h4>
               <p>Наша цель - обеспечить лучшее обслуживание клиентов и своевременно ответить на все ваши вопросы.</p>
               <div class="form_section">
-                <form id="request" class="form_contant" action="/" method="post">
+                <form id="request" class="form_contant" action="/contact/" method="post">{% csrf_token %}
                   <fieldset>
-                    {% csrf_token %}
+
                   <div class="row">
                     <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <input class="field_custom" placeholder="Ваше имя" name="first_name" type="text" required />

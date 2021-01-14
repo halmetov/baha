@@ -4,12 +4,29 @@ from datetime import datetime
 import math
 from main.models import ClientSays, Information, Brand, Service, BestService, Recovery, ServiceProcess, Product, \
     Feedback, Blog, Staff, About_service, About, About_action, BlogQoute, Blogcomment, Price, Faq, Contact,\
-    Productcomment, ProductCategory, BlogCategory, ContactPost
+    Productcomment, ProductCategory, BlogCategory, ContactPost,Cart,CartItem
 # Create your views here.
 
 
 
 def indexHandler (request):
+    cart = {
+        'info': {},
+        'product_count': 0,
+        'products': [],
+        'price': 0
+    }
+    open_carts =Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart['info'] = open_cart
+        if cart_items:
+            cart['product_count'] = len(cart_items)
+            cart['products'] = cart_items
+
+
+
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
@@ -35,6 +52,7 @@ def indexHandler (request):
         'products': products,
         'feedbacks': feedbacks,
         'blogs': blogs,
+        'cart': cart,
     })
 
 
@@ -454,4 +472,133 @@ def applicationHandler(request):
         'informations': informations,
         'brands': brands,
         'services': services,
+    })
+
+def cartHandler (request):
+    if request.method == 'POST':
+        action = request.POST.get('action', '')
+        if action == 'add_to_cart':
+            new_cart = None
+            product_id = int(request.POST.get('product_id', 0))
+            amount = int(request.POST.get('amount', 0))
+            open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+            if not open_carts:
+                new_cart = Cart()
+                new_cart.session_id = request.session.session_key
+                new_cart.save()
+            else:
+                new_cart = open_carts[0]
+
+            cart_items = CartItem.objects.filter(cart__id=new_cart.id).filter(product__id=product_id).filter(status=0)
+            if cart_items:
+                new_cart_item = cart_items[0]
+                new_cart_item.amount += amount
+                new_cart_item.save()
+            else:
+                new_cart_item = CartItem()
+                new_cart_item.product = Product.objects.get(id=product_id)
+                new_cart_item.cart = Cart.objects.get(id=new_cart.id)
+                new_cart_item.amount = amount
+                new_cart_item.product_price = new_cart_item.product.price
+                new_cart_item.save()
+
+        elif action == 'remove_from_cart':
+            product_id = int(request.POST.get('product_id', 0))
+            open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+            if open_carts:
+                new_cart = open_carts[0]
+            if new_cart:
+                cart_items = CartItem.objects.filter(cart__id=new_cart.id).filter(product__id=product_id).filter(status=0)
+                for ci in cart_items:
+                    ci.status = -1
+                    ci.save
+
+        if action in ['add_to_cart', 'remove_from_cart']:
+            open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+            if open_carts:
+                new_cart = open_carts[0]
+                cart_items = CartItem.objects.filter(cart__id=new_cart.id).filter(status=0)
+
+                all_summ = 0
+                item_count = 0
+                for ci in cart_items:
+                    all_summ += ci.amount * ci.product_price
+                    item_count += ci.amount
+                new_cart.orig_price = all_summ
+                new_cart.price = all_summ
+                new_cart.amount = item_count
+                new_cart.save()
+        return JsonResponse({'success': True, 'errorMsg': '', '_success': True})
+    else:
+        cart = {
+            'info': {},
+            'product_count': 0,
+            'products': [],
+            'price': 0
+        }
+        open_carts =Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+        if open_carts:
+            open_cart = open_carts[0]
+            cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+            cart['info'] = open_cart
+            if cart_items:
+                cart['product_count'] = len(cart_items)
+                cart['products'] = cart_items
+
+
+        client_sayss = ClientSays.objects.filter(status=0)
+        informations = Information.objects.all()
+        brands = Brand.objects.filter()[:5]
+        services = Service.objects.filter()
+        categories = ProductCategory.objects.filter()
+
+
+
+        return render(request, 'cart.html', {
+            'active_page': 'main',
+            'client_sayss': client_sayss,
+            'informations': informations,
+            'brands': brands,
+            'services': services,
+            'categories': categories,
+
+            'cart': cart,
+        })
+
+
+
+
+
+def chekHandler (request):
+    cart = {
+        'info': {},
+        'product_count': 0,
+        'products': [],
+        'price': 0
+    }
+    open_carts =Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart['info'] = open_cart
+        if cart_items:
+            cart['product_count'] = len(cart_items)
+            cart['products'] = cart_items
+
+
+
+    client_sayss = ClientSays.objects.filter(status=0)
+    informations = Information.objects.all()
+    brands = Brand.objects.filter()[:5]
+    services = Service.objects.filter()
+
+
+
+    return render(request, 'chek.html', {
+        'active_page': 'main',
+        'client_sayss': client_sayss,
+        'informations': informations,
+        'brands': brands,
+        'services': services,
+        'cart': cart,
     })

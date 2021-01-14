@@ -90,6 +90,7 @@
           <div class="menu_side">
             <div id="navbar_menu">
               <ul class="first-ul">
+                <li><a href="/cart">{% if cart and cart.info %} {{ cart.info.amount }} {% else %}0{% endif %}</a></li>
                 <li> <a {% if active_page == 'main' %}  class="active" {% endif %} href="/">Главная</a>
                   <ul>
                     <li><a href="it_home_dark.html">Тёмная Страница Главная</a></li>
@@ -117,8 +118,8 @@
                 <li> <a href="/shop" {% if active_page == 'shop' %}  class="active" {% endif %}>Магазин</a>
                   <ul>
                     <li><a href="/shop">Список Товаров</a></li>
-                    <li><a href="it_cart.html">Корзина Покупок</a></li>
-                    <li><a href="it_checkout.html">Касса</a></li>
+                    <li><a href="/cart">Корзина Покупок <b style="color:black;" >({% if cart and cart.info %}{% else %}0{% endif %})</b></a></li>
+                    <li><a href="/chek">Касса</a></li>
                   </ul>
                 </li>
                 <li> <a href="/contact" {% if active_page == 'contact' %}  class="active" {% endif %} >Контакты</a></li>
@@ -376,6 +377,37 @@
 <script src="/static/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
 <script src="/static/revolution/js/extensions/revolution.extension.video.min.js"></script>
 <!-- map js -->
+<script>
+  $('.js-add-to-cart').click(function(){
+    var amount = $(this).parents('.js-container').find('[name="amount"]').val();
+    var product_id = $(this).parents('.js-container').find('[name="product_id"]').val();
+    var csrfmiddlewaretoken = $(this).parents('.js-container').find('[name="csrfmiddlewaretoken"]').val();
+
+    var oData = {
+      'amount': amount,
+      'product_id': product_id,
+      'action': 'add_to_cart',
+      'csrfmiddlewaretoken': csrfmiddlewaretoken
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: '/cart/',
+      dataType: 'json',
+      data: oData,
+      success: function(){
+        alert('Успешно добавлено!');
+        location.reload();
+      }
+    })
+
+    return false;
+  })
+</script>
+
+
+
+
 <script>
          // This example adds a marker to indicate the position of Bondi Beach in Sydney,
          // Australia.

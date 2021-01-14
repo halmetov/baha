@@ -160,6 +160,39 @@ class Productcomment(models.Model):
 
 
 
+class Cart(models.Model):
+    title = models.CharField(max_length=300, blank=True, default='')
+    person = models.CharField(max_length=300, blank=True, default='')
+    phone = models.CharField(max_length=300, blank=True, default='')
+    address = models.CharField(max_length=300, blank=True, default='')
+    payed = models.IntegerField(default=0)
+    status = models.IntegerField(default=0)
+    session_id = models.CharField(max_length=300, blank=True, default='')
+    amount = models.IntegerField(default=0)
+    discount = models.IntegerField(default=0)
+    orig_price = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.session_id
+
+
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    amount = models.IntegerField(default=0)
+    product_price = models.IntegerField(default=0)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    status = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.product.title + ' ' + self.cart.session_id
+
+
+
+
+
+
 class Feedback(models.Model):
     title = models.CharField(max_length=300)
     logo = models.ImageField(upload_to='upload')

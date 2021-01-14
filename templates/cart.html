@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">Корзина Товаров</h1>
+              <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li class="active">Корзина Товаров</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end inner page banner -->
+
+
+<div class="section padding_layout_1 Shopping_cart_section">
+  <div class="container">
+    <div class="row">
+      {% if cart and cart.products %}
+      <div class="col-sm-12 col-md-12">
+        <div class="product-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th class="text-center">Цена</th>
+                <th class="text-center">Сумма</th>
+                <th> </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for pro in cart.products %}
+              <tr>
+                <td class="col-sm-8 col-md-6"><div class="media"> <a class="thumbnail pull-left" href="#"> <img class="media-object" src="/media/{{ pro.product.logo }}" alt="#"></a>
+                    <div class="media-body">
+                      <h4 class="media-heading"><a href="#">{{ pro.product.title }}</a></h4>
+                      <span>Status: </span><span class="text-success">In Stock</span> </div>
+                  </div></td>
+                <td class="col-sm-1 col-md-1" style="text-align: center"><input class="form-control" value="{{ pro.amount }}" type="email">
+                </td>
+                <td class="col-sm-1 col-md-1 text-center"><p class="price_table">{{ pro.product_price }} тг</p></td>
+                <td class="col-sm-1 col-md-1 text-center"><p class="price_table">{{ cart.info.orig_price }} тг</p></td>
+                <td class="col-sm-1 col-md-1">
+                  <button type="button" class="bt_main"><i class="fa fa-trash"></i> Удалить</button>
+                </td>
+              </tr>
+            {% endfor %}
+
+            </tbody>
+          </table>
+          <table class="table">
+            <tbody>
+              <tr class="cart-form">
+                <td class="actions"><div class="coupon">
+                    <input name="coupon_code" class="input-text" id="coupon_code" placeholder="Код купона" type="text">
+                    <input class="button" name="apply_coupon" value="Применить купон" type="submit">
+                  </div>
+                  <input class="button" name="update_cart" value="Обновить корзину" disabled="" type="submit">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="shopping-cart-cart">
+          <table>
+            <tbody>
+              <tr class="head-table">
+                <td><h5>Итоги покупки</h5></td>
+                <td class="text-right"></td>
+              </tr>
+              <tr>
+                <td><h4>Сумма</h4></td>
+                <td class="text-right"><h4>{{ cart.info.orig_price }} тг</h4></td>
+              </tr>
+              <tr>
+                <td><h5>Скидка</h5></td>
+                <td class="text-right"><h4>5.00 тг </h4></td>
+              </tr>
+              <tr>
+                <td><h3>Сумма к оплате</h3></td>
+                <td class="text-right"><h4>55.00 тг</h4></td>
+              </tr>
+              <tr>
+                <td><button type="button" class="button">Наличными</button></td>
+                <td><button class="button">Карта</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="container">
+      <div class="full" style="margin-top: 35px;">
+        <h3>Извините у вас нет товаров в корзине!</h3>
+        <h1>Хотите что нибудь приобрести!</h1>
+        <p><a class="btn main_bt" href="/shop">Магазин</a></p>
+      </div>
+      <div class="side_bar_blog">
+            <h4>КАТЕГОРИЯ ТОВАРОВ</h4>
+             <div class="categary">
+              <ul>
+                <li {% if not category_id  %} class="active" {% endif %} ><a href="/shop/"><i class="fa fa-angle-right"></i> ВСЕ ТОВАРЫ </a></li>
+                {% for category in categories %}
+                <li {% if category_id == category.id %} class="active" {% endif %} ><a href="/shop/?category_id={{ category.id }}"><i class="fa fa-angle-right"></i> {{ category.title }} </a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+    {% endif %}
+  </div>
+    </div>
+
+</div>
+
+<script>
+    $('body').removeClass("it_service").addClass("it_serv_shopping_cart").addClass("shopping-cart");
+</script>
+
+{% endblock %}
