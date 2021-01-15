@@ -41,12 +41,11 @@
             </div>
             <div class="product-detail-side"> <span><del>${{ product.old_price }}</del></span><span class="new-price">${{ product.price }}</span> <span class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> </span> <span class="review">(5 customer review)</span> </div>
             <div class="js-container detail-contant">
-              {% csrf_token %}
               <p>{{ product.mini_description }}<br>
                 <span class="stock">2 в наличии</span> </p>
                 <div class="quantity">
                   <input type="hidden" name="product_id" value="{{ product.id }}">
-                  <input step="1" min="1" max="5" name="amount" value="1" title="Qty" class="input-text qty text" size="4" type="number">
+                  <input step="1" min="1" max="10" name="amount" value="1" title="Qty" class="input-text qty text" size="4" type="number">
                 </div>
                 <button type="submit" class="js-add-to-cart btn sqaure_bt">В корзину</button>
             </div>
@@ -101,7 +100,7 @@
                           <div class="full" id="SHOP_COMMENT">
                             <div id="collapseExample" class="full collapse commant_box">
 
-                              <form accept-charset="UTF-8" action="" method="post">{% csrf_token %}
+                              <form accept-charset="UTF-8" action="" method="post">
 
                                 <input type="hidden" id="COMMENT_ID" name="comment_id" value="0">
                                 <input class="field_custom" name="name" placeholder="Имя" type="text" required>

@@ -27,7 +27,7 @@
 <div class="section padding_layout_1 Shopping_cart_section">
   <div class="container">
     <div class="row">
-      {% if cart and cart.products %}
+      {% if cart_items %}
       <div class="col-sm-12 col-md-12">
         <div class="product-table">
           <table class="table">
@@ -41,19 +41,19 @@
               </tr>
             </thead>
             <tbody>
-            {% for pro in cart.products %}
+            {% for ci in cart_items %}
               <tr>
-                <td class="col-sm-8 col-md-6"><div class="media"> <a class="thumbnail pull-left" href="#"> <img class="media-object" src="/media/{{ pro.product.logo }}" alt="#"></a>
+                <td class="col-sm-8 col-md-6"><div class="media"> <a class="thumbnail pull-left" href="#"> <img class="media-object" src="/media/{{ ci.product.logo }}" alt="#"></a>
                     <div class="media-body">
-                      <h4 class="media-heading"><a href="#">{{ pro.product.title }}</a></h4>
+                      <h4 class="media-heading"><a href="#">{{ ci.product.title }}</a></h4>
                       <span>Status: </span><span class="text-success">In Stock</span> </div>
                   </div></td>
-                <td class="col-sm-1 col-md-1" style="text-align: center"><input class="form-control" value="{{ pro.amount }}" type="email">
+                <td class="col-sm-1 col-md-1" style="text-align: center"><input step="1" min="1" max="10" name="amount" value="{{ ci.amount }}" title="Qty" class="input-text qty text" size="4" type="number">
                 </td>
-                <td class="col-sm-1 col-md-1 text-center"><p class="price_table">{{ pro.product_price }} тг</p></td>
-                <td class="col-sm-1 col-md-1 text-center"><p class="price_table">{{ cart.info.orig_price }} тг</p></td>
+                <td class="col-sm-1 col-md-1 text-center"><p class="price_table">{{ ci.product_price }} тг</p></td>
+                <td class="col-sm-1 col-md-1 text-center"><p class="price_table">{{ ci.summ }} тг</p></td>
                 <td class="col-sm-1 col-md-1">
-                  <button type="button" class="bt_main"><i class="fa fa-trash"></i> Удалить</button>
+                  <button data-id="{{ ci.product.id }}" type="button" class="js-delete-item bt_main"><i class="fa fa-trash"></i> Удалить</button>
                 </td>
               </tr>
             {% endfor %}
@@ -82,19 +82,19 @@
               </tr>
               <tr>
                 <td><h4>Сумма</h4></td>
-                <td class="text-right"><h4>{{ cart.info.orig_price }} тг</h4></td>
+                <td class="text-right"><h4>{{ cart.orig_price }} тг</h4></td>
               </tr>
               <tr>
                 <td><h5>Скидка</h5></td>
-                <td class="text-right"><h4>5.00 тг </h4></td>
+                <td class="text-right"><h4>0 тг </h4></td>
               </tr>
               <tr>
                 <td><h3>Сумма к оплате</h3></td>
-                <td class="text-right"><h4>55.00 тг</h4></td>
+                <td class="text-right"><h4>{{ cart.orig_price }} тг</h4></td>
               </tr>
               <tr>
-                <td><button type="button" class="button">Наличными</button></td>
-                <td><button class="button">Карта</button></td>
+                <td><button type="button" class="button">Связаться</button></td>
+                <td><a href="/chek"><button class="button">Оплата</button></a></td>
               </tr>
             </tbody>
           </table>

@@ -193,6 +193,10 @@ a {
 	outline: none;
 }
 
+.button a{
+    color: #fff;
+}
+
 a,
 .btn {
 	text-decoration: none !important;
@@ -426,7 +430,7 @@ a#submit {
 
 a:hover,
 a:focus {
-	color: #000;
+	color: #fff;
 	text-decoration: none;
 }
 

@@ -37,6 +37,9 @@
       <![endif]-->
 </head>
 <body id="default_theme" class="it_service">
+
+{% csrf_token %}
+
 <!-- loader -->
 <div class="bg_load"> <img class="loader_animation" src="/static/images/loaders/loader_1.png" alt="#" /> </div>
 <!-- end loader -->
@@ -90,7 +93,7 @@
           <div class="menu_side">
             <div id="navbar_menu">
               <ul class="first-ul">
-                <li><a href="/cart">{% if cart and cart.info %} {{ cart.info.amount }} {% else %}0{% endif %}</a></li>
+
                 <li> <a {% if active_page == 'main' %}  class="active" {% endif %} href="/">Главная</a>
                   <ul>
                     <li><a href="it_home_dark.html">Тёмная Страница Главная</a></li>
@@ -118,16 +121,22 @@
                 <li> <a href="/shop" {% if active_page == 'shop' %}  class="active" {% endif %}>Магазин</a>
                   <ul>
                     <li><a href="/shop">Список Товаров</a></li>
-                    <li><a href="/cart">Корзина Покупок <b style="color:black;" >({% if cart and cart.info %}{% else %}0{% endif %})</b></a></li>
+                    <li><a href="/cart">Корзина Покупок</a></li>
                     <li><a href="/chek">Касса</a></li>
                   </ul>
                 </li>
                 <li> <a href="/contact" {% if active_page == 'contact' %}  class="active" {% endif %} >Контакты</a></li>
+                {% if user.is_authenticated %}
+                 <li> <a href="/order" {% if active_page == 'order' %}  class="active" {% endif %} >Заказы</a></li>
+                {% endif %}
               </ul>
             </div>
             <div class="search_icon">
-              <ul>
+              <ul style="margin-right:10px">
                 <li><a href="#" data-toggle="modal" data-target="#search_bar"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+              </ul>
+              <ul>
+                <li><a href="/cart" ><i class="fa fa-shopping-cart" aria-hidden="true">{% if cart_items %} {{ cart.amount }}  {% else %} 0 {% endif %}</i></a></li>
               </ul>
             </div>
           </div>
@@ -381,7 +390,7 @@
   $('.js-add-to-cart').click(function(){
     var amount = $(this).parents('.js-container').find('[name="amount"]').val();
     var product_id = $(this).parents('.js-container').find('[name="product_id"]').val();
-    var csrfmiddlewaretoken = $(this).parents('.js-container').find('[name="csrfmiddlewaretoken"]').val();
+    var csrfmiddlewaretoken = $('[name="csrfmiddlewaretoken"]').val();
 
     var oData = {
       'amount': amount,
@@ -403,6 +412,59 @@
 
     return false;
   })
+
+   $('.js-delete-item').click(function(){
+        var csrfmiddlewaretoken = $('[name="csrfmiddlewaretoken"]').val();
+        var product_id = $(this).data('id');
+        var oData = {
+          'product_id': product_id,
+          'action': 'remove_from_cart',
+          'csrfmiddlewaretoken': csrfmiddlewaretoken
+        }
+
+        $.ajax({
+          type: 'POST',
+          url: '/cart/',
+          dataType: 'json',
+          data: oData,
+          success: function(){
+            alert('Успешно удалено!');
+            location.reload();
+          }
+        })
+
+        return false;
+      })
+
+
+      $('.js-checkout').click(function(){
+        var csrfmiddlewaretoken = $('[name="csrfmiddlewaretoken"]').val();
+        var oData = {
+          'fn': $('[name="fn"]').val(),
+          'ln': $('[name="ln"]').val(),
+          'city': $('[name="city"]').val(),
+          'country': $('[name="country"]').val(),
+          'zip_code': $('[name="zip_code"]').val(),
+          'email': $('[name="email"]').val(),
+          'phone': $('[name="phone"]').val(),
+          'address': $('[name="address"]').val(),
+          'action': 'checkout',
+          'csrfmiddlewaretoken': csrfmiddlewaretoken
+        }
+
+        $.ajax({
+          type: 'POST',
+          url: '/cart/',
+          dataType: 'json',
+          data: oData,
+          success: function(){
+            alert('Успешно отправлено!');
+            location.reload();
+          }
+        })
+
+        return false;
+      })
 </script>
 
 

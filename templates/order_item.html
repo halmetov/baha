@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">Оплаченные заказы</h1>
+              <ol class="breadcrumb">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/order">Заказы</a></li>
+                <li class="active">Оплаченные заказы</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<br><br>
+<table class="table">
+  <thead>
+    <tr style="width:100%;">
+      <th style="width:50%;" class="text-center" >Товар</th>
+      <th style="width:25%;" class="text-center">Количество</th>
+      <th style="width:50%;" class="text-center">Цена</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for oi in order_items %}
+    <tr style="width:100%;">
+      <td style="width:50%;" class="col-sm-8 col-md-6 text-center ">
+        <div class="media">
+          <div class="media-body">
+            <h4 class="media-heading"><a href="#">{{ oi.product.title }}</a></h4>
+            <span>В складе: </span><span class="text-success">Есть</span><br>
+            <img style="width:250px;" class="media-object" src="/media/{{ oi.product.logo }}" alt="#">
+          </div>
+        </div>
+      </td>
+      <td style="width:25%;" class="col-sm-1 col-md-1 text-center"><p class="price_table"> {{ oi.amount }} шт</p></td>
+      <td style="width:25%;" class="col-sm-1 col-md-1 text-center"><p class="price_table">{{ oi.product_price }} тг</p></td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+{% endif %}
+
+
+
+
+{% endblock %}

@@ -20,7 +20,7 @@ from django.views.static import serve
 from it_site import settings
 from main.views import indexHandler, aboutHandler, serviceHandler, service_listHandler, service_detailHandler, \
     blogHandler, blog_detailHandler, priceHandler, faqHandler, shopHandler, shop_detailHandler, contactHandler, \
-    Handler404, applicationHandler, cartHandler, chekHandler
+    Handler404, applicationHandler, cartHandler, chekHandler, orderHandler, order_itemHandler
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,4 +45,6 @@ urlpatterns = [
     path('application/', applicationHandler),
     path('cart/', cartHandler),
     path('chek/', chekHandler),
+    path('order/', orderHandler),
+    path('order/<int:order_id>/', order_itemHandler),
 ]

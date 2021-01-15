@@ -358,37 +358,37 @@
               <div class="col-md-12">
                 <div class="form-field">
                   <label>Адрес <span class="red">*</span></label>
-                  <textarea name="ad"></textarea>
+                  <textarea name="address"></textarea>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-field">
                   <label> Город <span class="red">*</span></label>
-                  <input name="tc" type="text">
+                  <input name="city" type="text">
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-field">
                   <label> Страна <span class="red">*</span></label>
-                  <input name="sc" type="text">
+                  <input name="country" type="text">
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-field">
                   <label> ZIP код <span class="red">*</span></label>
-                  <input name="pz" type="text">
+                  <input name="zip_code" type="text">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-field">
                   <label> Телефон <span class="red">*</span></label>
-                  <input name="ph" type="text">
+                  <input name="phone" type="text">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-field">
                   <label>Электронный адрес <span class="red">*</span></label>
-                  <input name="em" type="email">
+                  <input name="email" type="email">
                 </div>
               </div>
             </div>
@@ -406,23 +406,21 @@
               </tr>
               <tr>
                 <td><h4>Сумма</h4></td>
-                <td class="text-right"><h4>42.00 тг</h4></td>
+                <td class="text-right"><h4>{{ cart.orig_price }} тг</h4></td>
               </tr>
               <tr>
                 <td><h5>Скидка</h5></td>
-                <td class="text-right"><h4>6.00 тг</h4></td>
+                <td class="text-right"><h4>0 тг</h4></td>
               </tr>
               <tr>
                 <td><h3>Сумма к оплате</h3></td>
-                <td class="text-right"><h4>48.00 тг</h4></td>
+                <td class="text-right"><h4>{{ cart.orig_price }} тг</h4></td>
               </tr>
               <tr>
                 <td>
-                  <form action="#">
                     <div class="center">
-                      <button class="bt_main">Оплатить</button>
+                      <button class="js-checkout bt_main">Оплатить</button>
                     </div>
-                  </form>
                 </td>
               </tr>
             </tbody>

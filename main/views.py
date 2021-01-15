@@ -10,20 +10,13 @@ from main.models import ClientSays, Information, Brand, Service, BestService, Re
 
 
 def indexHandler (request):
-    cart = {
-        'info': {},
-        'product_count': 0,
-        'products': [],
-        'price': 0
-    }
+    cart = {}
+    cart_items = []
     open_carts =Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
     if open_carts:
         open_cart = open_carts[0]
         cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
-        cart['info'] = open_cart
-        if cart_items:
-            cart['product_count'] = len(cart_items)
-            cart['products'] = cart_items
+        cart = open_cart
 
 
 
@@ -52,11 +45,21 @@ def indexHandler (request):
         'products': products,
         'feedbacks': feedbacks,
         'blogs': blogs,
+
         'cart': cart,
+        'cart_items': cart_items,
     })
 
 
 def aboutHandler (request):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
@@ -79,10 +82,21 @@ def aboutHandler (request):
         'about_services': about_services,
         'abouts': abouts,
         'about_actions': about_actions,
+
+        'cart': cart,
+        'cart_items': cart_items,
     })
 
 
 def serviceHandler(request):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
@@ -102,10 +116,21 @@ def serviceHandler(request):
         'ex_staffs': ex_staffs,
         'main_services': main_services,
         'service_processs': service_processs,
+
+        'cart': cart,
+        'cart_items': cart_items,
     })
 
 
 def service_listHandler(request):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
@@ -121,6 +146,9 @@ def service_listHandler(request):
         'brands': brands,
         'services': services,
         'ex_staffs': ex_staffs,
+
+        'cart': cart,
+        'cart_items': cart_items,
     })
 
 
@@ -161,6 +189,14 @@ def service_detailHandler(request, detail_id):
 
 
 def blogHandler(request):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
     which_one_id = int(request.GET.get('which_one_id', 0))
 
     limit = int(request.GET.get('limit', 2))
@@ -209,6 +245,9 @@ def blogHandler(request):
         'categories': categories,
 
         'which_one_id': which_one_id,
+
+        'cart': cart,
+        'cart_items': cart_items,
     })
 
 
@@ -225,6 +264,14 @@ def blog_detailHandler(request, blog_detail_id):
         new_post_comment.text = request.POST.get('text', '')
         new_post_comment.date = datetime.now()
         new_post_comment.save()
+
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
 
     which_one_id = int(request.GET.get('which_one_id', 0))
     limit = int(request.GET.get('limit', 2))
@@ -269,10 +316,21 @@ def blog_detailHandler(request, blog_detail_id):
         'which_one_id': which_one_id,
         'limit': limit,
         'total': total,
+
+        'cart': cart,
+        'cart_items': cart_items,
     })
 
 
 def priceHandler(request):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
     client_sayss = ClientSays.objects.filter(status=0)
     informations = Information.objects.all()
     brands = Brand.objects.filter()[:5]
@@ -288,6 +346,9 @@ def priceHandler(request):
         'brands': brands,
         'services': services,
         'prices': prices,
+
+        'cart': cart,
+        'cart_items': cart_items,
     })
 
 
@@ -315,6 +376,14 @@ def faqHandler(request):
 
 
 def shopHandler(request):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
     q = request.GET.get('q', '')
     category_id = int(request.GET.get('category_id', 0))
 
@@ -366,6 +435,9 @@ def shopHandler(request):
         'category_id': category_id,
         'q': q,
 
+        'cart': cart,
+        'cart_items': cart_items,
+
     })
 
 
@@ -380,6 +452,14 @@ def shop_detailHandler(request, product_id):
         new_product_comment.product_id = int(request.POST.get('product_id', ''))
         new_product_comment.date = datetime.now()
         new_product_comment.save()
+
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
 
     category_id = int(request.GET.get('category_id', 0))
     limit = int(request.GET.get('limit', 3))
@@ -408,11 +488,22 @@ def shop_detailHandler(request, product_id):
         'category_id': category_id,
         'limit': limit,
         'item_count': item_count,
+
+        'cart': cart,
+        'cart_items': cart_items,
     })
 
 
 def contactHandler(request):
     if request.method == 'GET':
+        cart = {}
+        cart_items = []
+        open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+        if open_carts:
+            open_cart = open_carts[0]
+            cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+            cart = open_cart
+
         client_sayss = ClientSays.objects.filter(status=0)
         informations = Information.objects.all()
         brands = Brand.objects.filter()[:5]
@@ -426,6 +517,9 @@ def contactHandler(request):
             'brands': brands,
             'services': services,
             'contacts': contacts,
+
+            'cart': cart,
+            'cart_items': cart_items,
         })
     else:
         r = ContactPost()
@@ -511,7 +605,22 @@ def cartHandler (request):
                 cart_items = CartItem.objects.filter(cart__id=new_cart.id).filter(product__id=product_id).filter(status=0)
                 for ci in cart_items:
                     ci.status = -1
-                    ci.save
+                    ci.save()
+
+        elif action == 'checkout':
+            open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+            if open_carts:
+                new_cart = open_carts[0]
+                new_cart.fn = request.POST.get('fn', '')
+                new_cart.ln = request.POST.get('ln', '')
+                new_cart.city = request.POST.get('city', '')
+                new_cart.country = request.POST.get('country', '')
+                new_cart.zip_code = request.POST.get('zip_code', '')
+                new_cart.email = request.POST.get('email', '')
+                new_cart.phone = request.POST.get('phone', '')
+                new_cart.address = request.POST.get('address', '')
+                new_cart.status = 1
+                new_cart.save()
 
         if action in ['add_to_cart', 'remove_from_cart']:
             open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
@@ -524,26 +633,21 @@ def cartHandler (request):
                 for ci in cart_items:
                     all_summ += ci.amount * ci.product_price
                     item_count += ci.amount
+                    ci.summ = ci.product_price * ci.amount
+                    ci.save()
                 new_cart.orig_price = all_summ
                 new_cart.price = all_summ
                 new_cart.amount = item_count
                 new_cart.save()
         return JsonResponse({'success': True, 'errorMsg': '', '_success': True})
     else:
-        cart = {
-            'info': {},
-            'product_count': 0,
-            'products': [],
-            'price': 0
-        }
-        open_carts =Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+        cart = {}
+        cart_items = []
+        open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
         if open_carts:
             open_cart = open_carts[0]
             cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
-            cart['info'] = open_cart
-            if cart_items:
-                cart['product_count'] = len(cart_items)
-                cart['products'] = cart_items
+            cart = open_cart
 
 
         client_sayss = ClientSays.objects.filter(status=0)
@@ -555,7 +659,7 @@ def cartHandler (request):
 
 
         return render(request, 'cart.html', {
-            'active_page': 'main',
+            'active_page': 'shop',
             'client_sayss': client_sayss,
             'informations': informations,
             'brands': brands,
@@ -563,27 +667,83 @@ def cartHandler (request):
             'categories': categories,
 
             'cart': cart,
+            'cart_items': cart_items,
         })
+
+
+
+def orderHandler(request):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
+    client_sayss = ClientSays.objects.filter(status=0)
+    informations = Information.objects.all()
+    brands = Brand.objects.filter()[:5]
+    services = Service.objects.filter()
+    orders = Cart.objects.filter(status=1)
+
+
+
+    return render(request, 'order.html', {
+        'active_page': 'order',
+        'client_sayss': client_sayss,
+        'informations': informations,
+        'brands': brands,
+        'services': services,
+        'orders': orders,
+
+        'cart': cart,
+        'cart_items': cart_items,
+    })
+
+
+
+def order_itemHandler(request, order_id):
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    if open_carts:
+        open_cart = open_carts[0]
+        cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
+        cart = open_cart
+
+    client_sayss = ClientSays.objects.filter(status=0)
+    informations = Information.objects.all()
+    brands = Brand.objects.filter()[:5]
+    services = Service.objects.filter()
+    order_items = CartItem.objects.filter(status=0).filter(cart__id=order_id)
+
+
+
+    return render(request, 'order_item.html', {
+        'active_page': 'order',
+        'client_sayss': client_sayss,
+        'informations': informations,
+        'brands': brands,
+        'services': services,
+        'order_items': order_items,
+
+        'cart': cart,
+        'cart_items': cart_items,
+    })
 
 
 
 
 
 def chekHandler (request):
-    cart = {
-        'info': {},
-        'product_count': 0,
-        'products': [],
-        'price': 0
-    }
-    open_carts =Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
+    cart = {}
+    cart_items = []
+    open_carts = Cart.objects.filter(session_id=request.session.session_key).filter(status=0)
     if open_carts:
         open_cart = open_carts[0]
         cart_items = CartItem.objects.filter(cart__id=open_cart.id).filter(status=0)
-        cart['info'] = open_cart
-        if cart_items:
-            cart['product_count'] = len(cart_items)
-            cart['products'] = cart_items
+        cart = open_cart
 
 
 
@@ -595,10 +755,11 @@ def chekHandler (request):
 
 
     return render(request, 'chek.html', {
-        'active_page': 'main',
+        'active_page': 'shop',
         'client_sayss': client_sayss,
         'informations': informations,
         'brands': brands,
         'services': services,
         'cart': cart,
+        'cart_items': cart_items,
     })

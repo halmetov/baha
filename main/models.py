@@ -162,9 +162,15 @@ class Productcomment(models.Model):
 
 class Cart(models.Model):
     title = models.CharField(max_length=300, blank=True, default='')
-    person = models.CharField(max_length=300, blank=True, default='')
+    fn = models.CharField(max_length=300, blank=True, default='')
+    ln = models.CharField(max_length=300, blank=True, default='')
+    city = models.CharField(max_length=300, blank=True, default='')
+    country = models.CharField(max_length=300, blank=True, default='')
+    zip_code = models.CharField(max_length=300, blank=True, default='')
+    email = models.CharField(max_length=300, blank=True, default='')
     phone = models.CharField(max_length=300, blank=True, default='')
     address = models.CharField(max_length=300, blank=True, default='')
+    person = models.CharField(max_length=300, blank=True, default='')
     payed = models.IntegerField(default=0)
     status = models.IntegerField(default=0)
     session_id = models.CharField(max_length=300, blank=True, default='')
@@ -183,6 +189,7 @@ class CartItem(models.Model):
     amount = models.IntegerField(default=0)
     product_price = models.IntegerField(default=0)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    summ = models.IntegerField(default=0)
     status = models.IntegerField(default=0)
 
     def __str__(self):
